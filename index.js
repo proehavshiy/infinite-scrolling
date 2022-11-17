@@ -28,8 +28,8 @@ const lazyLoadingObserver = new IntersectionObserver((entries, observer) => {
     }
   })
 }, {
-  rootMargin: '0px',
-  threshold: .5
+  rootMargin: '0%',
+  threshold: .1
 });
 
 // infinite scroll observer
@@ -70,8 +70,12 @@ function createCard(imgUrl, text) {
 
   const image = card.querySelector('img');
   image.dataset.src = imgUrl;
-  const caption = card.querySelector('.card__text');
+  // reserve initial dimentions of imare for the moment before the end of the loading of image to prevent layout flashing
+  // and as a result, calling the observer callback
+  image.width = '200';
+  image.height = '150';
   image.src = './placeholder-img.png';
+  const caption = card.querySelector('.card__text');
   caption.textContent = text;
 
   return card;
